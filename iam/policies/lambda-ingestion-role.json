@@ -1,0 +1,63 @@
+{
+  "roleName": "agf-ingestion-lambda-role-dev",
+  "description": "IAM role for the AGF data ingestion Lambda function",
+  "assumeRolePolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "lambda.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  },
+  "attachedPolicies": [
+    {
+      "PolicyName": "AWSLambdaBasicExecutionRole",
+      "PolicyArn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+    }
+  ],
+  "inlinePolicies": {
+    "DynamoDBAccess": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:PutItem",
+            "dynamodb:GetItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:Query",
+            "dynamodb:Scan"
+          ],
+          "Resource": [
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-file-inventory-dev",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-experiments-dev",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-sync-runs-dev",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-file-inventory-dev/index/*",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-experiments-dev/index/*",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-sync-runs-dev/index/*"
+          ]
+        }
+      ]
+    },
+    "S3ReadAccess": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "Resource": [
+            "arn:aws:s3:::agf-instrument-data",
+            "arn:aws:s3:::agf-instrument-data/*"
+          ]
+        }
+      ]
+    }
+  }
+}
