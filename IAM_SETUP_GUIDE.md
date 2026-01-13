@@ -130,6 +130,15 @@ This IAM policy grants the following permissions:
 
 ## Security Best Practices
 
+**NEVER hardcode AWS credentials in code or config files.**
+
+Instead, use:
+1. **IAM Roles** for Lambda/EC2 (recommended)
+2. **AWS SSO** for local development
+3. **Environment variables** from secure vault (if absolutely necessary)
+
+### Additional Recommendations
+
 1. **Rotate Keys Regularly**
    - Consider rotating access keys every 90 days
    - Use AWS Secrets Manager for production
@@ -137,15 +146,22 @@ This IAM policy grants the following permissions:
 2. **Use IAM Roles Instead (Advanced)**
    - For production, consider using IAM roles with AWS Amplify
    - This eliminates the need to manage access keys
+   - See AWS documentation on [Amplify service roles](https://docs.aws.amazon.com/amplify/latest/userguide/how-to-service-role-amplify-console.html)
 
 3. **Monitor Access**
    - Enable CloudTrail to log API calls
    - Set up CloudWatch alarms for unusual activity
+   - See `docs/CLOUDTRAIL_SETUP.md` for setup instructions
 
 4. **Principle of Least Privilege**
    - This policy only grants read access
    - No write, update, or delete permissions
    - Only specific tables and bucket are accessible
+
+5. **Never Commit Credentials to Git**
+   - Add `.env*` to `.gitignore`
+   - Use git-secrets or similar tools to prevent accidental commits
+   - If credentials are leaked, rotate immediately
 
 ## Troubleshooting
 
