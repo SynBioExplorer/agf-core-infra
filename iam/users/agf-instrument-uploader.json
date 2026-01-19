@@ -1,0 +1,11 @@
+{
+  "userName": "agf-instrument-uploader",
+  "description": "Service account for laboratory instruments to upload data files to S3",
+  "attachedPolicies": [
+    {
+      "PolicyName": "AGFInstrumentUploadPolicy",
+      "PolicyArn": "arn:aws:iam::789922127765:policy/AGFInstrumentUploadPolicy"
+    }
+  ],
+  "notes": "Access keys are configured on each laboratory instrument workstation. Credentials stored securely in instrument configuration files."
+}

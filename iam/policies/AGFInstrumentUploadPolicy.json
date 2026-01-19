@@ -1,0 +1,51 @@
+{
+  "policyName": "AGFInstrumentUploadPolicy",
+  "policyArn": "arn:aws:iam::789922127765:policy/AGFInstrumentUploadPolicy",
+  "description": "Allows AGF laboratory instruments to upload data files to the S3 raw zone. Grants write access to raw prefix only, enabling automated data collection from flow cytometers, liquid handlers, bioreactors, and analytical equipment. Supports file uploads, overwrites for updated data, and metadata operations. Read access included for verification. Restricted to raw data tier - no access to curated zones or other buckets.",
+  "policyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "ListBucketPrefixes",
+        "Effect": "Allow",
+        "Action": [
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
+        ],
+        "Resource": "arn:aws:s3:::agf-instrument-data",
+        "Condition": {
+          "StringLike": {
+            "s3:prefix": [
+              "raw",
+              "raw/",
+              "raw/*",
+              "heartbeat",
+              "heartbeat/",
+              "heartbeat/*",
+              "log",
+              "log/",
+              "log/*"
+            ]
+          }
+        }
+      },
+      {
+        "Sid": "RWIntoPrefixes",
+        "Effect": "Allow",
+        "Action": [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:GetObjectVersion",
+          "s3:AbortMultipartUpload",
+          "s3:ListMultipartUploadParts",
+          "s3:PutObjectTagging"
+        ],
+        "Resource": [
+          "arn:aws:s3:::agf-instrument-data/raw/*",
+          "arn:aws:s3:::agf-instrument-data/heartbeat/*",
+          "arn:aws:s3:::agf-instrument-data/log/*"
+        ]
+      }
+    ]
+  }
+}

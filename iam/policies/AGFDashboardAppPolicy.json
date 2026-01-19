@@ -1,0 +1,59 @@
+{
+  "policyName": "AGFDashboardAppPolicy",
+  "policyArn": "arn:aws:iam::789922127765:policy/AGFDashboardAppPolicy",
+  "description": "Policy for AGF Dashboard app to read DynamoDB tables and S3 objects",
+  "policyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "DynamoDBReadAccess",
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:GetItem",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:BatchGetItem",
+          "dynamodb:DescribeTable"
+        ],
+        "Resource": [
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-instruments-dev",
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-instruments-dev/index/*",
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-sync-runs-dev",
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-sync-runs-dev/index/*",
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-file-inventory-dev",
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-file-inventory-dev/index/*",
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-experiments-dev",
+          "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-experiments-dev/index/*"
+        ]
+      },
+      {
+        "Sid": "S3ReadAccess",
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject",
+          "s3:GetObjectVersion"
+        ],
+        "Resource": "arn:aws:s3:::agf-instrument-data/*"
+      },
+      {
+        "Sid": "S3ListBucket",
+        "Effect": "Allow",
+        "Action": [
+          "s3:ListBucket",
+          "s3:GetBucketLocation"
+        ],
+        "Resource": "arn:aws:s3:::agf-instrument-data"
+      },
+      {
+        "Sid": "LambdaInvokeZipGenerator",
+        "Effect": "Allow",
+        "Action": [
+          "lambda:InvokeFunction"
+        ],
+        "Resource": [
+          "arn:aws:lambda:ap-southeast-2:789922127765:function:agf-zip-generator-*"
+        ]
+      }
+    ]
+  }
+}

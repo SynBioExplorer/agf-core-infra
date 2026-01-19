@@ -1,0 +1,11 @@
+{
+  "userName": "agf-dashboard-app",
+  "description": "Service account for the AGF Dashboard Next.js application",
+  "attachedPolicies": [
+    {
+      "PolicyName": "AGFDashboardAppPolicy",
+      "PolicyArn": "arn:aws:iam::789922127765:policy/AGFDashboardAppPolicy"
+    }
+  ],
+  "notes": "Used by the Next.js dashboard app hosted on Amplify to access DynamoDB and S3 resources."
+}
