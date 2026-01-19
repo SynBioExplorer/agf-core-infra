@@ -19,12 +19,12 @@
               "raw",
               "raw/",
               "raw/*",
-              "heartbeat",
-              "heartbeat/",
-              "heartbeat/*",
-              "log",
-              "log/",
-              "log/*"
+              "heartbeats",
+              "heartbeats/",
+              "heartbeats/*",
+              "logs",
+              "logs/",
+              "logs/*"
             ]
           }
         }
@@ -42,8 +42,8 @@
         ],
         "Resource": [
           "arn:aws:s3:::agf-instrument-data/raw/*",
-          "arn:aws:s3:::agf-instrument-data/heartbeat/*",
-          "arn:aws:s3:::agf-instrument-data/log/*"
+          "arn:aws:s3:::agf-instrument-data/heartbeats/*",
+          "arn:aws:s3:::agf-instrument-data/logs/*"
         ]
       }
     ]
