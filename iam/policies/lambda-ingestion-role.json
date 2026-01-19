@@ -30,7 +30,8 @@
             "dynamodb:GetItem",
             "dynamodb:UpdateItem",
             "dynamodb:Query",
-            "dynamodb:Scan"
+            "dynamodb:Scan",
+            "dynamodb:BatchWriteItem"
           ],
           "Resource": [
             "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-file-inventory-dev",

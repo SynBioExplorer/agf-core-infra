@@ -1,0 +1,101 @@
+{
+  "roleName": "agf-reconciliation-lambda-role-dev",
+  "description": "IAM role for the AGF reconciliation Lambda function",
+  "assumeRolePolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "lambda.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  },
+  "attachedPolicies": [
+    {
+      "PolicyName": "AWSLambdaBasicExecutionRole",
+      "PolicyArn": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+    }
+  ],
+  "inlinePolicies": {
+    "DynamoDBReadAccess": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:Scan",
+            "dynamodb:Query"
+          ],
+          "Resource": [
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-file-inventory-dev",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-file-inventory-dev/index/*",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-sync-runs-dev",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-sync-runs-dev/index/*",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-experiments-dev",
+            "arn:aws:dynamodb:ap-southeast-2:789922127765:table/agf-experiments-dev/index/*"
+          ]
+        }
+      ]
+    },
+    "S3ReadAccess": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:ListBucket",
+            "s3:GetObject"
+          ],
+          "Resource": [
+            "arn:aws:s3:::agf-instrument-data",
+            "arn:aws:s3:::agf-instrument-data/*"
+          ]
+        }
+      ]
+    },
+    "CloudWatchMetricsAccess": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "cloudwatch:PutMetricData"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "cloudwatch:namespace": "AGF/Reconciliation"
+            }
+          }
+        }
+      ]
+    },
+    "SESAccess": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ses:SendEmail"
+          ],
+          "Resource": "arn:aws:ses:ap-southeast-2:789922127765:identity/felix.meier@mq.edu.au"
+        }
+      ]
+    },
+    "SNSPublishAccess": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sns:Publish"
+          ],
+          "Resource": "arn:aws:sns:ap-southeast-2:789922127765:agf-pipeline-alerts-dev"
+        }
+      ]
+    }
+  }
+}
